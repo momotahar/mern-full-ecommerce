@@ -48,21 +48,31 @@ const ProductScreen = () => {
   }, [slug]);
 
   //add to cart handler
-  const {state, dispatch: ctxDispatch} = useContext(Store)
-  const addToCardHandler = () => {
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { cart } = state;
+  const addToCardHandler = async () => {
+    //check if the product is already in the cart or not
+    const existItem = cart.cartItems.find((item) => item._id === product._id);
+    //Increment the quantity of the exist item in the cart
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock < quantity) {
+      window.alert("Product is out fo stock");
+      return;
+    }
     ctxDispatch({
-      type: 'CART_ADD_ITEM',
-      payload:{...product, quantity: 1}
-    })
-  }
+      type: "CART_ADD_ITEM",
+      payload: { ...product, quantity },
+    });
+  };
 
   /*===========================================================*/
   return (
     <div>
       {loading ? (
-          <LoadingBox/>
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
+        <LoadingBox />
+      ) : error ? (
+        <MessageBox variant='danger'>{error}</MessageBox>
       ) : (
         <div>
           <Row>
@@ -118,7 +128,9 @@ const ProductScreen = () => {
                     {product.countInStock > 0 && (
                       <ListGroup.Item>
                         <div className='d-grid'>
-                          <Button variant='primary' onClick={addToCardHandler} >Add to cart</Button>
+                          <Button variant='primary' onClick={addToCardHandler}>
+                            Add to cart
+                          </Button>
                         </div>
                       </ListGroup.Item>
                     )}
