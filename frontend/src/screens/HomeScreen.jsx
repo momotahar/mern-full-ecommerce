@@ -4,6 +4,9 @@ import axios from "axios";
 import logger from "use-reducer-logger";
 import Product from "../components/Product";
 import { Helmet } from "react-helmet-async";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { getError } from "../utils";
 //Create reducer
 const reducer = (state, action) => {
   switch (action.type) {
@@ -33,7 +36,7 @@ const HomeScreen = () => {
         const { data } = await axios.get("/api/products");
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (error) {
-        dispatch({ type: "FETCH_FAIL", payload: error.message });
+        dispatch({ type: "FETCH_FAIL", payload: getError(error) });
       }
     };
     fetchProducts();
@@ -46,9 +49,9 @@ const HomeScreen = () => {
       <h1>Featured Products</h1>
       <div className='products'>
         {loading ? (
-          <div>loading...</div>
+          <LoadingBox/>
         ) : error ? (
-          <div>{error}</div>
+          <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Row>
             {products?.map((product) => (
