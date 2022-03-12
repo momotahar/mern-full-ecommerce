@@ -8,6 +8,8 @@ import Rating from "../components/Rating";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { getError } from "../utils";
+import { useContext } from "react";
+import { Store } from "../Store";
 //Create reducer
 const reducer = (state, action) => {
   switch (action.type) {
@@ -44,6 +46,17 @@ const ProductScreen = () => {
     };
     fetchProducts();
   }, [slug]);
+
+  //add to cart handler
+  const {state, dispatch: ctxDispatch} = useContext(Store)
+  const addToCardHandler = () => {
+    ctxDispatch({
+      type: 'CART_ADD_ITEM',
+      payload:{...product, quantity: 1}
+    })
+  }
+
+  /*===========================================================*/
   return (
     <div>
       {loading ? (
@@ -105,7 +118,7 @@ const ProductScreen = () => {
                     {product.countInStock > 0 && (
                       <ListGroup.Item>
                         <div className='d-grid'>
-                          <Button variant='primary'>Add to cart</Button>
+                          <Button variant='primary' onClick={addToCardHandler} >Add to cart</Button>
                         </div>
                       </ListGroup.Item>
                     )}
