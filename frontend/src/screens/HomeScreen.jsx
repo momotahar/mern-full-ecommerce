@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import axios from "axios";
 import logger from "use-reducer-logger";
 import Product from "../components/Product";
+import { Helmet } from "react-helmet-async";
 //Create reducer
 const reducer = (state, action) => {
   switch (action.type) {
@@ -39,6 +40,9 @@ const HomeScreen = () => {
   }, []);
   return (
     <div>
+      <Helmet>
+        <title>E-Commerce</title>
+      </Helmet>
       <h1>Featured Products</h1>
       <div className='products'>
         {loading ? (

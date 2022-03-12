@@ -6,7 +6,7 @@ import ProductScreen from "./screens/ProductScreen";
 function App() {
   return (
     <BrowserRouter>
-      <div className="d-flex flex-column site-container">
+      <div className='d-flex flex-column site-container'>
         <header>
           <Navbar bg='dark' variant='dark'>
             <Container>
@@ -17,7 +17,7 @@ function App() {
           </Navbar>
         </header>
         <main>
-          <Container>
+          <Container className='mt-3'>
             <Routes>
               <Route exact path='/' element={<HomeScreen />} />
               <Route path='/product/:slug' element={<ProductScreen />} />
@@ -25,7 +25,7 @@ function App() {
           </Container>
         </main>
         <footer>
-          <div className="text-center">All rights reserved </div>
+          <div className='text-center'>All rights reserved </div>
         </footer>
       </div>
     </BrowserRouter>

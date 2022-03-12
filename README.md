@@ -40,3 +40,6 @@
     1. npm install react-bootstrap bootstrap
     2. npm install react-router-bootstrap
     3. update App.js
+11. Create Product Details Screen
+   1. fetch product from backend
+   2. create 3 columns for image, info and action
