@@ -2,6 +2,8 @@ import dotenv from 'dotenv'
 import express from "express";
 import mongoose from 'mongoose';
 import data from "./data.js";
+import seedRouter from './routes/seedRoutes.js';
+import productRouter from './routes/productRoutes.js';
 
 dotenv.config()
 const app = express();
@@ -12,27 +14,10 @@ mongoose.connect(process.env.MONGODB_URI)
 
 
 //End Point : API
+app.use('/api/seed', seedRouter)
+app.use('/api/products', productRouter)
 
-app.get("/api/products", (req, res) => {
-  res.send(data.products);
-});
-app.get("/api/products/slug/:slug", (req, res) => {
-  const product = data.products.find(pdt => pdt.slug === req.params.slug)
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({message:"Product Not Found"})
-  }
-});
-//Get  a Single product to add to the cart by id
-app.get("/api/products/:id", (req, res) => {
-  const product = data.products.find(pdt => pdt._id === req.params.id)
-  if (product) {
-    res.send(product)
-  } else {
-    res.status(404).send({message:"Product not Found"})
-  }
-})
+
 
 //Listening port
 const port = process.env.PORT || 5000;
