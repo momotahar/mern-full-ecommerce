@@ -4,7 +4,11 @@ export const Store = createContext();
 
 const initialState = {
   // this is the state
-  cart: { cartItems: [] },
+  cart: {
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
+      : [],
+  },
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -19,8 +23,15 @@ const reducer = (state, action) => {
             (item) => (item._id === existItem._id ? newItem : item) //if the item exist (existItem == newItem) so replace the existItem by newItem which is it self otherwise tike the keep the item found
           )
         : [...state.cart.cartItems, newItem];
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
 
+    case "CART_REMOVE_ITEM": {
+      const cartItems = state.cart.cartItems.filter(
+        (item) => item._id !== action.payload._id
+      );
+      return { ...state, cart: { ...state.cart, cartItems } };
+    }
     default:
       return state;
   }
