@@ -140,4 +140,18 @@
     1. create order screen
     2. create order history api
     3. use api in the frontend
-         
+
+33. Create Profile Screen
+    1. get user info from context
+    2. show user information
+    3. create user update api
+    4. update user info   
+
+34. Publish to Heroku
+    1. create and config node project
+    2. server build folder in frontend folder
+    3. create heroku account
+    4. connect it to github
+    5. create mongodb atlas database
+    6. set database connection in heroku env variables
+    7. commit and push          
