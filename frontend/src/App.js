@@ -27,6 +27,7 @@ import { useState, useEffect } from "react";
 import { getError } from "./utils";
 import axios from "axios";
 import SearchBox from "./components/SearchBox";
+import SearchScreen from "./screens/SearchScreen";
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
@@ -151,6 +152,7 @@ function App() {
               <Route path='/payment' element={<PaymentMethodScreen />} />
               <Route path='/placeorder' element={<PlaceOrderScreen />} />
               <Route path='/order/:id' element={<OrderScreen />} />
+              <Route path='/search' element={<SearchScreen />} />
               <Route path='/ordershistory' element={<OrderHistoryScreen />} />
             </Routes>
           </Container>
